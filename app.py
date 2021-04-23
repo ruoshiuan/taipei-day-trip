@@ -62,7 +62,7 @@ def spot_list():
 					"mrt": result[6],
 					"latitude": result[7],
 					"longitude": result[8],
-					"images": [result[9]]
+					"images": result[9].split(",")
 					}
 				spot_list.append(dic)
 			# 每頁顯示12個景點(第0頁:[0:12])
@@ -95,7 +95,7 @@ def spot_list():
 					"mrt": result[6],
 					"latitude": result[7],
 					"longitude": result[8],
-					"images": [result[9]]
+					"images": result[9].split(",")
 					}
 				spot_list.append(dic)
 			cur_first = page * 12
@@ -125,7 +125,7 @@ def attraction_id(attractionId):
 				"mrt": result[6],
 				"latitude": result[7],
 				"longitude": result[8],
-				"images": [result[9]]
+				"images": result[9].split(",")
 				}
 			return jsonify({"data": dic}), 200
 		else:
