@@ -1,17 +1,18 @@
 from flask import *
 import json
 import mysql.connector
+from decouple import config
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['JSON_SORT_KEYS'] = False
 
-##### 改密碼 #####
+
 mydb = mysql.connector.connect(
     host = 'localhost',
-    user = user,
-    password = password,
+    user = config('userID',default=''),
+    password = config('password',default=''),
     database = 'taipei_day_trip'
 )
 mycursor = mydb.cursor()
@@ -38,7 +39,7 @@ def spot_list():
 		keyword = request.args.get("keyword", None)
 		# 沒輸入keyword，顯示全部景點 #
 		if keyword == None:
-			sql = "select * from spot"
+			sql = "select * from spots"
 			mycursor.execute(sql)
 			results = mycursor.fetchall()
 			# 計算總頁數
@@ -73,7 +74,7 @@ def spot_list():
 
 		# 有輸入keyword，顯示篩選後的景點 #
 		else:
-			sql = f"select * from spot where name like '%{keyword}%' or category like '%{keyword}%' or description like '%{keyword}%'"
+			sql = f"select * from spots where name like '%{keyword}%' or category like '%{keyword}%' or description like '%{keyword}%'"
 			mycursor.execute(sql)
 			results = mycursor.fetchall()
 			all_page = len(results) // 12
@@ -110,7 +111,7 @@ def spot_list():
 @app.route("/api/attraction/<attractionId>")
 def attraction_id(attractionId):
 	try:
-		sql = f"select * from spot where id={attractionId}"
+		sql = f"select * from spots where id={attractionId}"
 		mycursor.execute(sql)
 		result = mycursor.fetchone()
 		if result!=None:
