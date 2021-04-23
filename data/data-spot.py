@@ -10,7 +10,7 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-create_table = """create table spots(
+create_table = """create table spot(
     id int not null comment '景點編號',
     name varchar(45) not null comment '景點名稱',
     category varchar(45) not null comment '景點類別',
