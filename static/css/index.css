@@ -1,0 +1,342 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap");
+* {
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  position: relative;
+}
+body:after {
+  display: block;
+  height: 200px;
+  content: "";
+}
+
+.fixed_navbar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
+}
+
+#navbar {
+  height: 54px;
+  padding: 0 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+h1 {
+  position: relative;
+  font-weight: 700;
+  font-size: 30px;
+  flex: auto;
+  margin: 0;
+  color: #448899;
+  padding: 2px;
+  letter-spacing: 1px;
+}
+
+#navbar a {
+  color: #666666;
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+}
+
+middle_nav {
+  display: flex;
+  align-items: center;
+  color: #F8F8F8;
+  background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+  height: 320px;
+  position: relative;
+}
+
+.middle_content {
+  left: 25%;
+  position: relative;
+  transform: translateX(-25%);
+  z-index: 1;
+}
+
+h2 {
+  text-shadow: 0px 0px 30px #AABBCC;
+  font-weight: 500;
+  font-size: 28px;
+}
+
+h4 {
+  text-shadow: 0px 0px 30px #AABBCC;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.search_corner {
+  display: flex;
+  width: 460px;
+}
+
+input {
+  width: 400px;
+  height: 30px;
+  border-radius: 5px 0 0 5px;
+  color: #757575;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+}
+
+#search {
+  width: 60px;
+  height: auto;
+  border-radius: 0 5px 5px 0;
+  background-color: #448899;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+#search:hover {
+  filter: contrast(130%);
+}
+
+#search-icon {
+  width: 30px;
+  height: 30px;
+}
+
+#cover_box {
+  position: absolute;
+  right: 250px;
+  width: 620px;
+  height: 265px;
+  bottom: 0;
+  background-image: url('../images/welcome\ 1.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.content {
+  display: flex;
+  width: 1200px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 55px;
+}
+
+
+.info {
+  margin: 10px;
+  width: 270px;
+  height: 250px;
+  flex: none;
+  border: 1px solid #E8E8E8;
+  border-radius: 5px;
+  color: #757575;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.pic {
+  height: 180px;
+  max-width: 100%;
+  background-image: url("http://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.spot_name {
+  margin: 0;
+  padding: 5px 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mrt_name {
+  margin: 0;
+  float: left;
+  padding: 5px 10px;
+}
+
+.cata_name {
+  margin: 0;
+  padding: 5px 10px;
+  float: right;
+}
+
+
+/* 載入icon */
+.loading-icon {
+  background: #AADDEE;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+  left: 50%;
+  margin-top: 50px;
+}
+.loading-icon::before, .loading-icon::after {
+  position: absolute;
+  vertical-align: middle;
+  background: #AADDEE;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  opacity: 0.3;
+}
+.loading-icon::before {
+  content: "";
+  -webkit-animation: ripple 0.8s infinite;
+          animation: ripple 0.8s infinite;
+}
+.loading-icon::after {
+  content: "";
+  -webkit-animation: ripple 1s infinite;
+          animation: ripple 1s infinite;
+}
+/* 載入icon */
+
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 104px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #757575;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+
+/* keyframes特效區 */
+@-webkit-keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+/* keyframes特效 */
+
+
+/* RWD調整區 */
+@media screen and (max-width: 1600px) {
+  #navbar {
+    padding: 0 150px;
+  }
+
+  input {
+    width: 300px;
+  }
+
+  #cover_box {
+    right: 50px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  #navbar {
+    padding: 0 150px;
+  }
+
+  #cover_box {
+    width: 400px;
+    height: 190px;
+    right: 0;
+  }
+
+  .content {
+    width: 90%;
+    position: relative;
+  }
+
+  .info {
+    width: 45%;
+    flex: none;
+  }
+
+  .pic {
+    width: 100%;
+    background-position: center;
+    background-size: 514px auto;
+  }
+}
+@media screen and (max-width: 900px) {
+  #navbar {
+    padding: 0 50px;
+  }
+}
+@media screen and (max-width: 600px) {
+  #navbar {
+    padding: 0 10px;
+  }
+
+  .middle_content {
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  input {
+    width: 200px;
+    color: #757575;
+    padding: 10px;
+  }
+
+  #search {
+    width: 60px;
+    height: auto;
+  }
+  .search_corner{
+    width: 300px;
+  }
+  #cover_box {
+    width: 276px;
+    height: 149px;
+    background-position: 30px 15px;
+  }
+
+  .info {
+    width: 90%;
+    flex: none;
+  }
+
+  .pic {
+    background-size: 480px auto;
+    background-position: center;
+  }
+}
+
+/* RWD調整 */
