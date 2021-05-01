@@ -2,6 +2,7 @@ from flask import *
 import json
 import mysql.connector
 from decouple import config
+import paho.mqtt.client as mqtt
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -16,6 +17,7 @@ mydb = mysql.connector.connect(
     database = 'taipei_day_trip'
 )
 mycursor = mydb.cursor()
+
 
 # Pages
 @app.route("/")
@@ -37,13 +39,13 @@ def spot_list():
 	try:
 		page = int(request.args.get("page", 0))
 		keyword = request.args.get("keyword", None)
-		# 沒輸入keyword，顯示全部景點 #
+		# 沒輸入keyword : 先計算資料總筆數，再顯示每頁12筆的資料　#
 		if keyword == None:
-			sql = "select * from spots"
-			mycursor.execute(sql)
-			results = mycursor.fetchall()
+			sql_count = "select count(*) from spots;"
+			mycursor.execute(sql_count)
+			count_page = mycursor.fetchone()
 			# 計算總頁數
-			all_page = len(results) // 12
+			all_page = count_page[0] // 12
 			if page < all_page:
 				next_page = page+1
 			else:
@@ -51,6 +53,9 @@ def spot_list():
 			
 			# 建立景點列表
 			spot_list = []
+			sql_cur_data = f"select * from spots limit {page*12},12"
+			mycursor.execute(sql_cur_data)
+			results = mycursor.fetchall()
 			for result in results:
 				dic = {
 					"id": result[0],
@@ -65,16 +70,12 @@ def spot_list():
 					"images": result[9].split(",")
 					}
 				spot_list.append(dic)
-			# 每頁顯示12個景點(第0頁:[0:12])
-			cur_first = page * 12
-			cur_last = (page+1) * 12
-			data = spot_list[cur_first:cur_last]
-			spot = {"nextPage":next_page, "data": data}
+			spot = {"nextPage":next_page, "data": spot_list}
 			return jsonify(spot), 200
 
 		# 有輸入keyword，顯示篩選後的景點 #
 		else:
-			sql = f"select * from spots where name like '%{keyword}%' or category like '%{keyword}%' or description like '%{keyword}%'"
+			sql = f"select * from spots where name like '%{keyword}%' or category like '%{keyword}%' or mrt like '%{keyword}%' "
 			mycursor.execute(sql)
 			results = mycursor.fetchall()
 			all_page = len(results) // 12
