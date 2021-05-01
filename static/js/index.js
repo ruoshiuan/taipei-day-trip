@@ -3,7 +3,6 @@ let fetch_start = false
 const main = document.getElementsByTagName("main")[0]
 const content = document.getElementById("content")
 const search = document.getElementById("search")
-const loadingIcon = document.getElementsByClassName("loading-icon")[0]
 const footer = document.getElementById("footer")
 
 // 點擊後搜尋景點
@@ -67,16 +66,11 @@ const searching=()=>{
           info.appendChild(spot_name)
           info.appendChild(mrt_name)
           info.appendChild(cata_name)
-          if(spots.length < 12){
-            loadingIcon.remove()
-            
-          }
         }
       }else{
         const not_found = document.createElement("p")
         not_found.textContent = `找不到其他符合「 ${keyword} 」的相關結果`
         content.appendChild(not_found)
-        loadingIcon.remove()
       }
       page = nextPage;
       console.log(page)
