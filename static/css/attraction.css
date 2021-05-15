@@ -258,18 +258,16 @@ li {
 .description {
   border-top: 1px solid #E8E8E8;
   padding-top: 40px;
-  line-height: 23px;
+  line-height: 25px;
   letter-spacing: 1px;
   font-weight: 400;
 }
 
-#address_title {
+.address_title,.way_title {
   margin-bottom: 5px;
+  font-weight: 700;
 }
 
-#way_title {
-  margin-bottom: 5px;
-}
 .address,.way {
   line-height: 23px;
   letter-spacing: 1px;

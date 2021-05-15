@@ -135,8 +135,9 @@ h4 {
 .fa-search.fa-search {
   /* 原本一層調整font-size沒反應，暫時先用兩層className提升優先值 */
   font-size: 30px;
-  color: #eee;
-} 
+  color: #fff;
+  text-shadow: none;
+}
 
 #cover_box {
   position: absolute;

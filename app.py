@@ -12,8 +12,8 @@ app.secret_key = config('secret_key')
 
 mydb = mysql.connector.connect(
 	host = 'localhost',
-	user = config('userID',default=''),
-	password = config('password',default=''),
+	user = config('userID'),
+	password = config('password'),
 	database = 'taipei_day_trip'
 )
 mycursor = mydb.cursor()
