@@ -10,6 +10,7 @@ body, html {
   padding: 0;
   min-height: 100%;
   position: relative;
+  overflow-x: hidden;
   -webkit-user-select: none;
       user-select: none;
 }
@@ -24,7 +25,7 @@ body:after {
   right: 0;
   left: 0;
   z-index: 10;
-  width: 100%;
+  max-width: 100%;
   background-color: #fff;
   box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
 }
@@ -74,6 +75,7 @@ middle_nav {
   color: #F8F8F8;
   background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
   height: 320px;
+  max-width: 100%;
   position: relative;
   margin: 0;
 }
@@ -106,7 +108,8 @@ h4 {
 }
 
 #input_value {
-  width: 400px;
+  max-width: 400px;
+  min-width: 150px;
   height: 30px;
   border-radius: 5px 0 0 5px;
   color: #757575;
@@ -490,13 +493,13 @@ footer {
   }
 
   input {
-    width: 200px;
+    /* width: 150px; */
     color: #757575;
     padding: 10px;
   }
 
   #search {
-    width: 60px;
+    width: 70px;
     height: auto;
   }
   .search_corner{
