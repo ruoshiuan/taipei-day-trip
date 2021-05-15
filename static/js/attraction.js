@@ -16,14 +16,6 @@ const spot_description = document.getElementsByClassName("description")[0]
 const spot_address = document.getElementsByClassName("address")[0]
 const spot_way = document.getElementsByClassName("way")[0]
 
-const login = document.getElementById("login")
-const close_loginin = document.getElementById("close_loginin")
-const close_signup = document.getElementById("close_signup")
-const try_signup = document.getElementById("try_signup")
-const try_login = document.getElementById("try_login")
-const black_background = document.getElementById("black_background")
-const signup = document.getElementsByClassName("signup")[0]
-const loginin = document.getElementsByClassName("loginin")[0]
 
 // 取得資料 初始畫面
 const init = ()=>{
@@ -65,13 +57,18 @@ const renderSpot = (data)=>{
     if(mrt == null){
         spot_subtitle.textContent = category
     }else if(category == "其　　他"){
-        spot_subtitle.textContent = '其他類別'+' at '+ mrt  
+        spot_subtitle.textContent = '其他類別'+' at '+ mrt
     }else{
         spot_subtitle.textContent = category +' at '+ mrt
     }
 }
 
-
+// 顯示今天以後的日曆
+const setTodaysDate = ()=>{
+    let today = new Date().toISOString().split('T')[0];
+    document.getElementById("date").setAttribute('min', today);
+}
+setTodaysDate()
 
 // 價格切換
 const priceSwitch = ()=>{
@@ -82,8 +79,6 @@ const priceSwitch = ()=>{
         price.textContent = "新台幣 2500 元"
     })
 }
-
-
 
 // 點擊右按鈕切換圖片
 const clickButtonRight = (data)=>{
@@ -96,10 +91,10 @@ const clickButtonRight = (data)=>{
         spot_img.style.backgroundImage = 'url(' + images_arr[i] + ')'
         for(let x=0;x<images_arr.length;x++){
             if(i==x){
-            notSelected()
-            balls.childNodes[x].style.backgroundColor = "white"
+                notSelected()
+                balls.childNodes[x].style.backgroundColor = "white"
             }else{
-            balls.childNodes[x].style.backgroundColor = "black"
+                balls.childNodes[x].style.backgroundColor = "black"
             }
         }
     })
@@ -128,7 +123,7 @@ const clickButtonLeft = (data)=>{
 const requestAnimation = ()=>{
     spot_img.style.animation = "none"
     window.requestAnimationFrame(()=>{
-    spot_img.style.animation = "fadein 0.5s ease"
+        spot_img.style.animation = "fadein 0.5s ease"
     })
 }
 
@@ -159,53 +154,3 @@ const switchBall = (data)=>{
         })
     }
 }
-// 點擊登入/註冊 顯示登入表單
-const clickLoginSignup = ()=>{
-    login.addEventListener('click',()=>{
-        loginin.style.display = "block"
-        black_background.style.display = "block"
-        loginin.style.animation="render_move 1s ease"
-        black_background.style.display = "render_move 1s ease"
-    })
-}
-
-// 關閉登入表單
-const closeLoginForm = ()=>{
-    close_loginin.addEventListener('click',()=>{
-        loginin.style.display = "none"
-        black_background.style.display = "none"
-    })
-}
-
-// 關閉註冊表單
-const closeSignupForm = ()=>{
-    close_signup.addEventListener('click',()=>{
-        signup.style.display = "none"
-        loginin.style.display = "none"
-        black_background.style.display = "none"
-    })
-}
-
-// 切換至註冊表單
-const switchToSignup = ()=>{
-    try_signup.addEventListener('click',()=>{
-        signup.style.display = "block"
-        loginin.style.display="none"
-        signup.style.animation = "render_move 1s ease"
-        black_background.style.display = "block"
-    })
-}
-
-// 切換至登入表單
-const switchToLogin = ()=>{
-    try_login.addEventListener('click',()=>{
-        loginin.style.display = "block"
-        signup.style.display="none"
-        loginin.style.animation = "render_move 1s ease"
-    })
-}
-clickLoginSignup();
-closeLoginForm();
-closeSignupForm();
-switchToLogin();
-switchToSignup();

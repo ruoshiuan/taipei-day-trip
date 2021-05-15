@@ -12,8 +12,9 @@ body, html {
   padding: 0;
   min-height: 100%;
   position: relative;
+  -webkit-user-select: none;
+      user-select: none;
 }
-
 body:after {
   display: block;
   height: 200px;
@@ -24,9 +25,9 @@ body:after {
   position: fixed;
   right: 0;
   left: 0;
-  top: 0;
-  z-index: 5;
+  z-index: 10;
   width: 100%;
+  background-color: #fff;
   box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
 }
 
@@ -37,6 +38,12 @@ body:after {
   justify-content: center;
   align-items: center;
   background-color: #fff;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#logout {
+  display: none;
 }
 
 h1 {
@@ -48,6 +55,11 @@ h1 {
   color: #448899;
   padding: 2px;
   letter-spacing: 1px;
+}
+
+.top_title {
+  text-decoration: none;
+  color: #448899;
 }
 
 .nav_item {
@@ -246,14 +258,20 @@ li {
 .description {
   border-top: 1px solid #E8E8E8;
   padding-top: 40px;
+  line-height: 25px;
+  letter-spacing: 1px;
+  font-weight: 400;
 }
 
-#address_title {
-  margin-bottom: 0;
+.address_title,.way_title {
+  margin-bottom: 5px;
+  font-weight: 700;
 }
 
-#way_title {
-  margin-bottom: 0;
+.address,.way {
+  line-height: 23px;
+  letter-spacing: 1px;
+  font-weight: 400;
 }
 
 footer {
@@ -268,14 +286,16 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Login & Sign up */
-#black_background {
+.black_background {
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 15;
+  z-index: 10;
   left: 0;
   top: 0;
   background-color: #000;
@@ -283,7 +303,7 @@ footer {
   display: none;
 }
 
-.loginin, .signup {
+.login_form, .signup_form {
   position: fixed;
   top: 20%;
   left: 50%;
@@ -292,7 +312,7 @@ footer {
   z-index: 15;
   background-color: #fff;
   width: 340px;
-  height: 280px;
+  height: auto;
   text-align: center;
   border-radius: 5px;
   color: #666666;
@@ -303,12 +323,11 @@ footer {
   display: none;
 }
 
-.signup {
-  height: 330px;
+.signup_form {
   display: none;
 }
 
-#top_bar {
+.top_bar {
   width: auto;
   height: 10px;
   background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
@@ -354,11 +373,17 @@ footer {
   filter: contrast(130%);
 }
 
-#try_signup, #try_login {
+.login_msg, .signup_msg {
+  margin: 0;
+  color: #f24;
+}
+
+.try_signup, .try_login {
   color: #666666;
   line-height: 30px;
+  padding: 10px;
 }
-#try_signup:hover, #try_login:hover {
+.try_signup:hover, #try_login:hover {
   color: #ccc;
 }
 /* Login & Sign up */
@@ -494,7 +519,7 @@ footer {
   .spot_img {
     position: relative;
     border-radius: 0;
-    width: 360px;
+    width: 370px;
     height: 350px;
     background-repeat: no-repeat;
     background-size: cover;

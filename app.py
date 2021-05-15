@@ -2,19 +2,19 @@ from flask import *
 import json
 import mysql.connector
 from decouple import config
-import paho.mqtt.client as mqtt
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['JSON_SORT_KEYS'] = False
+app.secret_key = config('secret_key')
 
 
 mydb = mysql.connector.connect(
-    host = 'localhost',
-    user = config('userID',default=''),
-    password = config('password',default=''),
-    database = 'taipei_day_trip'
+	host = 'localhost',
+	user = config('userID'),
+	password = config('password'),
+	database = 'taipei_day_trip'
 )
 mycursor = mydb.cursor()
 
@@ -33,6 +33,70 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
+# 登入/註冊設定
+@app.route("/api/user", methods=['GET'])
+def sign_get():
+	if "email" in session:
+		return jsonify(
+			{"data":{
+			"id": session["id"],
+			"name": session["name"],
+			"email": session["email"]
+		}
+	})
+	else:
+		return jsonify({"message": None})
+
+@app.route("/api/user", methods=['POST'])
+def	sign_post():
+	try:
+		data = request.get_json()
+		name = data["name"]
+		email = data["email"]
+		password = data["password"]
+		sql = f"select email from user where email='{email}' "
+		mycursor.execute(sql)
+		account = mycursor.fetchone()
+		if account is None:
+			sql = f"insert into user(name,email,password) values('{name}','{email}','{password}')"
+			mycursor.execute(sql)
+			mydb.commit()
+			return jsonify({"ok": True})
+		elif account[0] == email:
+			return jsonify({"error": True, "message": "註冊失敗，Email已被使用過"}), 400
+		else:
+			return jsonify({"error": True, "message": "註冊失敗，重複的Email或其他原因"}), 400
+	except:
+		return jsonify({"error": True, "message": "伺服器內部錯誤"}),500
+
+@app.route("/api/user", methods=['PATCH'])
+def	sign_patch():
+	try:
+		data = request.get_json()
+		email = data["email"]
+		password = data["password"]
+		sql = f"select id,name,email,password from user where email='{email}' and password='{password}'"
+		mycursor.execute(sql)
+		account = mycursor.fetchone()
+		if account is None:
+			return jsonify({"error": True, "message": "登入失敗，帳號或密碼錯誤或其他原因"}),400
+		else:
+			if account[3] == password:
+				session["id"] = account[0]
+				session["name"] = account[1]
+				session["email"] = account[2]
+				return jsonify({"ok": True})
+	except:
+		return jsonify({"error": True, "message": "伺服器內部錯誤"}),500
+
+@app.route("/api/user", methods=['DELETE'])
+def	sign_delete():
+	session.pop("id", None)
+	session.pop("name", None)
+	session.pop("email", None)
+	return jsonify({"ok": True})
+
+
 # 取得景點資料列表
 @app.route("/api/attractions")
 def spot_list():
@@ -50,7 +114,7 @@ def spot_list():
 				next_page = page+1
 			else:
 				next_page = None
-			
+
 			# 建立景點列表
 			spot_list = []
 			sql_cur_data = f"select * from spots limit {page*12},12"
@@ -71,7 +135,7 @@ def spot_list():
 					}
 				spot_list.append(dic)
 			spot = {"nextPage":next_page, "data": spot_list}
-			return jsonify(spot), 200
+			return jsonify(spot)
 
 		# 有輸入keyword，顯示篩選後的景點 #
 		else:
@@ -103,7 +167,7 @@ def spot_list():
 			cur_last = (page+1) * 12
 			data = spot_list[cur_first:cur_last]
 			spot = {"nextPage":next_page, "data":data}
-			return jsonify(spot), 200
+			return jsonify(spot)
 	except:
 		server_err = {"error": True, "message": "伺服器內部錯誤"}
 		return server_err, 500
@@ -128,7 +192,7 @@ def attraction_id(attractionId):
 				"longitude": result[8],
 				"images": result[9].split(",")
 				}
-			return jsonify({"data": dic}), 200
+			return jsonify({"data": dic})
 		else:
 			num_err = {"error": True, "message": "景點編號不正確"}
 			return num_err, 400
