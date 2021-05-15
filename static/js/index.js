@@ -6,16 +6,6 @@ const search = document.getElementById("search")
 const footer = document.getElementById("footer")
 const loadingIcon = document.getElementsByClassName("loading-icon")[0]
 
-const login = document.getElementById("login")
-const close_loginin = document.getElementById("close_loginin")
-const close_signup = document.getElementById("close_signup")
-const try_signup = document.getElementById("try_signup")
-const try_login = document.getElementById("try_login")
-const black_background = document.getElementById("black_background")
-const signup = document.getElementsByClassName("signup")[0]
-const loginin = document.getElementsByClassName("loginin")[0]
-
-
 // 連線json資料 搜尋景點
 const searching=()=>{
   fetch_start = true;
@@ -102,7 +92,7 @@ const clickFindSpot = ()=>{
 clickFindSpot()
 
 // 清空content容器中的所有景點
-const contentChildDelete = ()=>{ 
+const contentChildDelete = ()=>{
   while(content.hasChildNodes()) {
       content.removeChild(content.firstChild);
     }
@@ -128,55 +118,3 @@ const observer = new IntersectionObserver(callback,{
 })
 observer.observe(footer)
 searching();
-
-
-// 點擊登入/註冊 顯示登入表單
-const clickLoginSignup = ()=>{
-  login.addEventListener('click',()=>{
-    loginin.style.display = "block"
-    black_background.style.display = "block"
-    loginin.style.animation="render_move 1s ease"
-    black_background.style.display = "render_move 1s ease"
-  })
-}
-
-// 關閉登入表單
-const closeLoginForm = ()=>{
-  close_loginin.addEventListener('click',()=>{
-    loginin.style.display = "none"
-    black_background.style.display = "none"
-  })
-}
-
-// 關閉註冊表單
-const closeSignupForm = ()=>{
-  close_signup.addEventListener('click',()=>{
-    signup.style.display = "none"
-    loginin.style.display = "none"
-    black_background.style.display = "none"
-  })
-}
-
-// 切換至註冊表單
-const switchToSignup = ()=>{
-  try_signup.addEventListener('click',()=>{
-    signup.style.display = "block"
-    loginin.style.display="none"
-    signup.style.animation = "render_move 1s ease"
-    black_background.style.display = "block"
-  })
-}
-
-// 切換至登入表單
-const switchToLogin = ()=>{
-  try_login.addEventListener('click',()=>{
-    loginin.style.display = "block"
-    signup.style.display="none"
-    loginin.style.animation = "render_move 1s ease"
-  })
-}
-clickLoginSignup();
-closeLoginForm();
-closeSignupForm();
-switchToLogin();
-switchToSignup();

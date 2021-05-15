@@ -23,8 +23,9 @@ body:after {
   position: fixed;
   right: 0;
   left: 0;
-  z-index: 5;
+  z-index: 10;
   width: 100%;
+  background-color: #fff;
   box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
 }
 
@@ -35,6 +36,12 @@ body:after {
   justify-content: center;
   align-items: center;
   background-color: #fff;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#logout {
+  display: none;
 }
 
 h1 {
@@ -46,6 +53,11 @@ h1 {
   color: #448899;
   padding: 2px;
   letter-spacing: 1px;
+}
+
+.top_title {
+  text-decoration: none;
+  color: #448899;
 }
 
 .nav_item {
@@ -63,6 +75,7 @@ middle_nav {
   background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
   height: 320px;
   position: relative;
+  margin: 0;
 }
 
 .middle_content {
@@ -70,6 +83,7 @@ middle_nav {
   position: relative;
   transform: translateX(-25%);
   z-index: 1;
+  top: 30px;
 }
 
 h2 {
@@ -86,7 +100,9 @@ h4 {
 
 .search_corner {
   display: flex;
-  width: 460px;
+  width: 462px;
+  position: relative;
+  bottom: 50px;
 }
 
 #input_value {
@@ -100,7 +116,7 @@ h4 {
   border: none;
 }
 
-#search {
+.search {
   width: 60px;
   height: auto;
   border-radius: 0 5px 5px 0;
@@ -110,16 +126,17 @@ h4 {
   align-items: center;
   cursor: pointer;
   border: none;
-  outline: none;
+  position: relative;
 }
-#search:hover {
-  filter: contrast(130%);
+.search:hover {
+  filter: contrast(120%);
 }
 
-#search-icon {
-  width: 30px;
-  height: 30px;
-}
+.fa-search.fa-search {
+  /* 原本一層調整font-size沒反應，暫時先用兩層className提升優先值 */
+  font-size: 30px;
+  color: #eee;
+} 
 
 #cover_box {
   position: absolute;
@@ -159,6 +176,7 @@ h4 {
 }
 .info:hover {
   transform: translate(-2px,-2px);
+  box-shadow: 2px 2px 5px #eee;
   opacity: 0.8;
 }
 
@@ -169,7 +187,18 @@ h4 {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
+.pic:before {
+  content: "";
+  display: block;
+  position: relative;
+  max-width: 100%;
+  height: 180px;
+  background: linear-gradient(180deg, #eee 0%, #AADDEE 50%, #eee 100%);
+  -webkit-animation: bgc_move 4s linear infinite;
+          animation: bgc_move 4s linear infinite;
+  background-size: 100% 300%;
+  z-index: -1;
+}
 
 .spot_name {
   margin: 0;
@@ -237,10 +266,12 @@ footer {
   position: absolute;
   width: 100%;
   bottom: 0;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Login & Sign up */
-#black_background {
+.black_background {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -252,7 +283,7 @@ footer {
   display: none;
 }
 
-.loginin, .signup {
+.login_form, .signup_form {
   position: fixed;
   top: 20%;
   left: 50%;
@@ -261,7 +292,7 @@ footer {
   z-index: 15;
   background-color: #fff;
   width: 340px;
-  height: 280px;
+  height: auto;
   text-align: center;
   border-radius: 5px;
   color: #666666;
@@ -272,12 +303,11 @@ footer {
   display: none;
 }
 
-.signup {
-  height: 330px;
+.signup_form {
   display: none;
 }
 
-#top_bar {
+.top_bar {
   width: auto;
   height: 10px;
   background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
@@ -323,17 +353,41 @@ footer {
   filter: contrast(130%);
 }
 
-#try_signup, #try_login {
+.login_msg, .signup_msg {
+  margin: 0;
+  color: #f24;
+}
+
+.try_signup, .try_login {
   color: #666666;
   line-height: 30px;
+  padding: 10px;
 }
-#try_signup:hover, #try_login:hover {
+.try_signup:hover, #try_login:hover {
   color: #ccc;
 }
 /* Login & Sign up */
 
 
 /* keyframes特效 */
+@-webkit-keyframes bgc_move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes bgc_move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -300%;
+  }
+}
+
 @-webkit-keyframes ripple {
   0% {
     transform: scale(0.8);
