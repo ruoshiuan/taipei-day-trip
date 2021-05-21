@@ -1,5 +1,8 @@
 {% extends "index.html" %}
 {% block title %}詳細景點資訊 - 台北一日遊{% endblock %}
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/attraction.css') }}"/>
+{% endblock %}
 {% block main %}
   <section>
     <div id="spot_content" class="spot_content">
@@ -31,7 +34,8 @@
             </di>
           </li>
           <li><b>導覽費用： </b><span id="price">新台幣 2000 元</span></li>
-          <button id="send">開始預定行程</button>
+          <div class="select_date_alert">*請選擇日期</div>
+          <button id="start_booking">開始預定行程</button>
         </ul>
       </form>
     </div>
@@ -45,6 +49,7 @@
   </section>
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('static', filename='js/user.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/attraction.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/attraction.js') }}"></script>
+  <!-- <script src="{{ url_for('static', filename='js/booking.js') }}"></script> -->
 {% endblock %}

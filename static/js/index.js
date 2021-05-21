@@ -1,6 +1,5 @@
 let page = 0
 let fetch_start = false
-const main = document.getElementsByTagName("main")[0]
 const content = document.getElementById("content")
 const search = document.getElementById("search")
 const footer = document.getElementById("footer")
@@ -39,8 +38,7 @@ const searching=()=>{
         fetch_start = false
       })
 }
-
-
+// 整理動態資料
 const spotData=(spots)=>{
   for(let spot of spots){
     const name = spot.name
@@ -68,10 +66,9 @@ const spotData=(spots)=>{
     mrt_name.textContent = mrt
     cata_name.textContent = category
     renderSpot(info,pic,spot_name,mrt_name,cata_name)
-
   }
 }
-
+// 顯示資料
 const renderSpot = (info,pic,spot_name,mrt_name,cata_name)=>{
   content.appendChild(info)
   info.appendChild(pic)
@@ -79,25 +76,6 @@ const renderSpot = (info,pic,spot_name,mrt_name,cata_name)=>{
   info.appendChild(mrt_name)
   info.appendChild(cata_name)
 }
-
-// 點擊後搜尋景點
-const clickFindSpot = ()=>{
-  search.addEventListener('click',()=>{
-    contentChildDelete();
-    page = 0
-    loadingIcon.remove()
-    searching();
-  })
-}
-clickFindSpot()
-
-// 清空content容器中的所有景點
-const contentChildDelete = ()=>{
-  while(content.hasChildNodes()) {
-      content.removeChild(content.firstChild);
-    }
-}
-
 // 當視窗觸及觀察目標(footer)時，才載入下一頁景點；page==null就結束觀察
 const callback = (entries, observer)=>{
   for(const entry of entries){
@@ -106,15 +84,35 @@ const callback = (entries, observer)=>{
       if(page!=null){
         if(page>0){
           searching();
-      }
+        }
       }else{
         observer.unobserve(footer)
       }
     }
   }
 }
-const observer = new IntersectionObserver(callback,{
-  threshold: 0.5,
-})
+const observer = new IntersectionObserver(callback,{threshold: 0.5})
 observer.observe(footer)
-searching();
+searching()
+
+// 點擊按enter鍵之後搜尋景點
+search.addEventListener('click',()=>{
+  contentChildDelete()
+  page = 0
+  loadingIcon.remove()
+  searching()
+})
+document.getElementById("input_value").addEventListener('keypress',(e)=>{
+  if(e.key === 'Enter'){
+    contentChildDelete()
+    page = 0
+    loadingIcon.remove()
+    searching()
+  }
+})
+// 清空content容器中的所有景點
+const contentChildDelete = ()=>{
+  while(content.hasChildNodes()) {
+      content.removeChild(content.firstChild);
+    }
+}

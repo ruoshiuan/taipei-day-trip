@@ -85,7 +85,6 @@ middle_nav {
   position: relative;
   transform: translateX(-25%);
   z-index: 1;
-  top: 30px;
 }
 
 h2 {
@@ -102,14 +101,12 @@ h4 {
 
 .search_corner {
   display: flex;
-  width: 462px;
+  width: 460px;
   position: relative;
-  bottom: 50px;
 }
 
 #input_value {
-  max-width: 400px;
-  min-width: 150px;
+  min-width: 380px;
   height: 30px;
   border-radius: 5px 0 0 5px;
   color: #757575;
@@ -120,7 +117,7 @@ h4 {
 }
 
 .search {
-  width: 60px;
+  min-width: 60px;
   height: auto;
   border-radius: 0 5px 5px 0;
   background-color: #448899;
@@ -135,8 +132,7 @@ h4 {
   filter: contrast(120%);
 }
 
-.fa-search.fa-search {
-  /* 原本一層調整font-size沒反應，暫時先用兩層className提升優先值 */
+.fa-search {
   font-size: 30px;
   color: #fff;
   text-shadow: none;
@@ -442,8 +438,8 @@ footer {
     padding: 0 150px;
   }
 
-  input {
-    width: 300px;
+  #input_value {
+    min-width: 300px;
   }
 
   #cover_box {
@@ -492,14 +488,14 @@ footer {
     transform: translate(-50%);
   }
 
-  input {
-    /* width: 150px; */
+  #input_value {
+    min-width: 220px;
     color: #757575;
     padding: 10px;
   }
 
   #search {
-    width: 70px;
+    /* min-width: 60px; */
     height: auto;
   }
   .search_corner{

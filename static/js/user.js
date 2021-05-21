@@ -3,21 +3,16 @@ const logout = document.getElementById("logout")
 const black_background = document.getElementsByClassName("black_background")[0]
 
 const login_form = document.getElementsByClassName("login_form")[0]
-const close_login_form = document.getElementById("close_login_form")
 const login_email = document.getElementById("login_email")
 const login_password = document.getElementById("login_password")
 const login_msg = document.getElementsByClassName("login_msg")[0]
-const login_button = document.getElementById("login_button")
-const try_signup = document.getElementsByClassName("try_signup")[0]
 
 const signup_form = document.getElementsByClassName("signup_form")[0]
-const close_signup_form = document.getElementById("close_signup_form")
 const signup_name = document.getElementById("signup_name")
 const signup_email = document.getElementById("signup_email")
 const signup_password = document.getElementById("signup_password")
-const signup_button = document.getElementById("signup_button")
 const signup_msg = document.getElementsByClassName("signup_msg")[0]
-const try_login = document.getElementsByClassName("try_login")[0]
+
 
 // 點擊登入/註冊 顯示登入表單
 login.addEventListener('click',()=>{
@@ -28,15 +23,13 @@ login.addEventListener('click',()=>{
 })
 
 // 關閉登入表單
+const close_login_form = document.getElementById("close_login_form")
 close_login_form.addEventListener('click',()=>{
     login_form.style.display = "none"
     black_background.style.display = "none"
 })
-black_background.addEventListener('click',()=>{
-    login_form.style.display = "none"
-    black_background.style.display = "none"
-})
 // 關閉註冊表單
+const close_signup_form = document.getElementById("close_signup_form")
 close_signup_form.addEventListener('click',()=>{
     signup_form.style.display = "none"
     login_form.style.display = "none"
@@ -49,8 +42,8 @@ black_background.addEventListener('click',()=>{
     black_background.style.display = "none"
 })
 
-
 // 切換至註冊表單
+const try_signup = document.getElementsByClassName("try_signup")[0]
 try_signup.addEventListener('click',()=>{
     signup_form.style.display = "block"
     login_form.style.display = "none"
@@ -62,6 +55,7 @@ try_signup.addEventListener('click',()=>{
 })
 
 // 切換至登入表單
+const try_login = document.getElementsByClassName("try_login")[0]
 try_login.addEventListener('click',()=>{
     login_form.style.display = "block"
     signup_form.style.display = "none"
@@ -73,28 +67,25 @@ try_login.addEventListener('click',()=>{
     signup_msg.textContent = ""
 })
 
-// 檢驗是否有登入，顯示該出現的畫面
-const checkLogin = ()=>{
-    let src = '/api/user'
-    fetch(src,{method: "GET"})
-      .then((res)=>{
-        return res.json()
-      })
-      .then((result)=>{
-        if(result["data"]!=null){
-          login.style.display = "none"
-          logout.style.display="block"
-          login_form.style.display="none"
-        }else{
-          login.style.display = "block"
-          logout.style.display="none"
-        }
-      }).catch(err=>console.log(err))
-
-}
-checkLogin()
+// 檢視畫面右上角登入狀態：有登入->顯示"登入系統"；沒登入->顯示"登入/註冊"
+let src = '/api/user'
+fetch(src,{method: "GET"})
+    .then((res)=>{
+    return res.json()
+    })
+    .then((result)=>{
+    if(result["data"]!=null){
+        login.style.display = "none"
+        logout.style.display="block"
+        login_form.style.display="none"
+    }else{
+        login.style.display = "block"
+        logout.style.display="none"
+    }
+    }).catch(err=>console.log(err))
 
 // 登入系統
+const login_button = document.getElementById("login_button")
 login_button.addEventListener('click',()=>{
     if(login_email.value === "" && login_password.value === ""){
         login_msg.textContent = "尚有欄位未輸入"
@@ -117,6 +108,7 @@ login_button.addEventListener('click',()=>{
                 location.reload()
             }else{
                 login_msg.textContent = result["message"]
+                login_msg.style.color = "#ff2244"
             }
         })
         .catch((err)=>{
@@ -125,8 +117,9 @@ login_button.addEventListener('click',()=>{
         }
 });
 
-// 點擊登出系統
+// 點擊登出系統會導回首頁，並清除預定行程
 logout.addEventListener('click',()=>{
+    logoutRemoveBooking()
     let src = '/api/user'
     fetch(src, {method: 'DELETE'})
     .then((res)=>{
@@ -134,16 +127,28 @@ logout.addEventListener('click',()=>{
     })
     .then((result)=>{
         if(result["ok"]){
-            location.reload()
+            document.location.pathname='/'
         }
     })
     .catch((err)=>{
     console.log("error",err)
     })
 })
-
+const logoutRemoveBooking = ()=>{
+    let src = '/api/booking'
+    fetch(src,{method: "DELETE"})
+    .then((res)=>{
+        return res.json()
+    })
+    .then((result)=>{
+        if(result["ok"]){
+        return result["ok"]
+        }
+    })
+}
 
 // 點擊註冊帳戶按鈕後進行資料驗證
+const signup_button = document.getElementById("signup_button")
 signup_button.addEventListener('click',()=>{
     //  姓名驗證:輸入2-20位中文或英文
     const signup_name_verify = /^[\u4e00-\u9fa5A-Za-z]{2,20}$/.test(signup_name.value)
@@ -191,7 +196,6 @@ signup_button.addEventListener('click',()=>{
         })
     }
 })
-
 // 註冊成功：清除輸入欄的內容，轉向登入視窗
 const signupSucess = ()=>{
     login_msg.textContent = "恭喜註冊成功！歡迎登入台北一日遊"
@@ -204,3 +208,23 @@ const signupSucess = ()=>{
     signup_email.value = ""
     signup_password.value = ""
 }
+
+// 點擊預定行程：使用者有登入->導向booking頁面；沒有登入->顯示登入視窗
+const booking = document.getElementById("booking")
+booking.addEventListener('click',()=>{
+    let src = '/api/user'
+    fetch(src,{method: "GET"})
+      .then((res)=>{
+        return res.json()
+      })
+      .then((result)=>{
+        if(result["data"]!=null){
+            document.location.pathname='/booking'
+        }else{
+            login_form.style.display = "block"
+            black_background.style.display = "block"
+            login_form.style.animation="render_move 1s ease"
+            black_background.style.display = "render_move 1s ease"
+        }
+      }).catch(err=>console.log(err))
+})
