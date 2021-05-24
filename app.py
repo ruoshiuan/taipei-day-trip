@@ -3,6 +3,7 @@ import json
 import mysql.connector
 from decouple import config
 
+
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -19,6 +20,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 
+
 # Pages
 @app.route("/")
 def index():
@@ -33,6 +35,74 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
+
+# 預定行程
+@app.route("/api/booking", methods=['GET'])
+def booking_get():
+	if "email" not in session:
+		return jsonify({"error": True, "message": "尚未登入系統"}), 403
+	else:
+		sql="select attractionId,name,address,images,date,time,price from booking inner join spots on booking.attractionId = spots.id"
+		mycursor.execute(sql)
+		result = mycursor.fetchone()
+		if result is None:
+			booking_info = {"data": None}
+			return jsonify(booking_info)
+		else:
+			booking_info = {
+				"data":{
+					"attraction": {
+						"id": result[0],
+						"name": result[1],
+						"address": result[2],
+						"image": result[3].split(",")[0]
+					},
+					"date": result[4],
+					"time": result[5],
+					"price": result[6]
+				}
+			}
+			return jsonify(booking_info)
+@app.route("/api/booking", methods=['POST'])
+def booking_post():
+	try:
+		if "email" not in session:
+			return jsonify({"error": True, "message": "尚未登入系統"}), 403
+		else:
+			data = request.get_json()
+			attractionId = data.get("attractionId")
+			date = data.get("date")
+			time = data.get("time")
+			price = data.get("price")
+			if date == "":
+				return jsonify({"error": True, "message": "請選擇日期"}), 400
+			else:
+				sql = f"select * from booking"
+				mycursor.execute(sql)
+				result = mycursor.fetchone()
+				if result != None:
+					sql = f"update booking set attractionId='{attractionId}',date='{date}',time='{time}',price='{price}'"
+					mycursor.execute(sql)
+					mydb.commit()
+					return jsonify({"ok": True})
+				else:
+					sql = f"insert into booking(attractionId,date,time,price) values ('{attractionId}','{date}','{time}','{price}')"
+					mycursor.execute(sql)
+					mydb.commit()
+					return jsonify({"ok": True})
+	except:
+		return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+@app.route("/api/booking", methods=['DELETE'])
+def booking_delete():
+	if "email" not in session:
+		return jsonify({"error": True, "message": "尚未登入系統"}), 403
+	else:
+		sql = "delete from booking"
+		mycursor.execute(sql)
+		mydb.commit()
+		return jsonify({"ok": True})
+
+
 # 登入/註冊設定
 @app.route("/api/user", methods=['GET'])
 def sign_get():
@@ -45,7 +115,7 @@ def sign_get():
 		}
 	})
 	else:
-		return jsonify({"message": None})
+		return jsonify({"data": None})
 
 @app.route("/api/user", methods=['POST'])
 def	sign_post():

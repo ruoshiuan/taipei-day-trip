@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+{% block title %}預定行程 - 台北一日遊{% endblock %}
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}"/>
+{% endblock %}
+{% block main %}
+  <section>
+    <div class="banner"></div>
+    <p class="no_booking_alert">目前沒有任何預定行程。</p>
+    <main class="booking_section">
+      <form class="booking_info_form">
+        <div class="info_card">
+          <div class="photo"></div>
+          <ul class="booking_info">
+            <li><div class="spot_name"></div></li>
+            <li><b>日期：</b><span class="date"></span></li>
+            <li><b>時間：</b><span class="time"></span></li>
+            <li><b>費用：</b><span class="price"></span></li>
+            <li><b>地點：</b><span class="address"></span></li>
+          </ul>
+          <!-- <i class="fas fa-trash-alt"></i> -->
+          <img class="icon_delete" src="/static/images/icon_delete.png" alt="delete">
+        </div>
+      </form>
+      <hr>
+      <form class="contact_form">
+        <ul>
+          <li class="contact_li"><h4>您的聯絡資訊</h4></li>
+          <li class="contact_li">聯絡姓名：<input class="contact_name" type="text"></li>
+          <li class="contact_li">聯絡信箱：<input class="contact_email" type="email"></li>
+          <li class="contact_li">手機號碼：<input class="contact_tel" type="tel"></li>
+          <li class="contact_li"><p><b>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</b></p></li>
+        </ul>
+      </form>
+      <hr>
+      <form class="pay_form">
+        <ul>
+          <li class="middle_li"><h4>信用卡付款資訊</h4></li>
+          <li class="middle_li">卡片號碼：<input class="credit_number" type="number" placeholder="**** **** **** ****"></li>
+          <li class="middle_li">過期時間：<input class="credit_valid" type="text" placeholder="MM / YY"></li>
+          <li class="middle_li">驗證密碼：<input class="credit_cvv" type="number" placeholder="CVV"></li>
+        </ul>
+      </form>
+      <hr>
+      <form class="confirm_form">
+        <div class="total_price"></div>
+        <button id="confirm">確認訂購並付款</button>
+      </form>
+    </main>
+  </section>
+{% endblock %}
+{% block script %}
+  <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+{% endblock %}

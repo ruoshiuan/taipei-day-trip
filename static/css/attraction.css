@@ -235,7 +235,12 @@ li {
   transform: scale(1);
 }
 
-#send {
+.select_date_alert {
+  color: #f24;
+  display: none;
+}
+
+#start_booking {
   padding: 5px 20px;
   margin-top: 10px;
   font-size: 19px;
@@ -246,8 +251,9 @@ li {
   cursor: pointer;
   border: none;
   box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  outline: none;
 }
-#send:hover {
+#start_booking:hover {
   filter: contrast(130%);
 }
 

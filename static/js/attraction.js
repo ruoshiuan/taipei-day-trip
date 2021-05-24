@@ -17,6 +17,60 @@ const spot_address = document.getElementsByClassName("address")[0]
 const spot_way = document.getElementsByClassName("way")[0]
 
 
+
+
+// 開始預定行程
+const start_booking = document.getElementById("start_booking")
+start_booking.addEventListener('click',(e)=>{
+    e.preventDefault()
+    let src = '/api/user'
+    fetch(src,{method: "GET"})
+      .then((res)=>{
+        return res.json()
+      })
+      .then((result)=>{
+        if(result["data"]!=null){
+            create_booking_info()
+        }else{
+            login_form.style.display = "block"
+            black_background.style.display = "block"
+            login_form.style.animation="render_move 1s ease"
+            black_background.style.display = "render_move 1s ease"
+        }
+      }).catch(err=>console.log(err))
+})
+
+
+const create_booking_info = ()=>{
+    const date_value = document.getElementById("date").value
+    const time_value = document.querySelector("[class=radio_input]:checked").value
+    const price_value = parseInt(price.textContent.replace(/[^0-9]/ig,""))
+    let src = '/api/booking'
+    fetch(src,{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "attractionId": attrId,
+            "date": date_value,
+            "time": time_value,
+            "price": price_value
+          })
+    })
+    .then((res)=>{
+        return res.json()
+    })
+    .then((result)=>{
+        if(result["ok"]){
+            document.location.pathname='/booking'
+
+        }else{
+            document.getElementsByClassName("select_date_alert")[0].style.display = "block"
+            document.getElementsByClassName("select_date_alert")[0].style.color = "#f24"
+        }
+    })
+    .catch(err=>(console.log(err)))
+}
+
 // 取得資料 初始畫面
 const init = ()=>{
     let src=`/api/attraction/${attractionId}`

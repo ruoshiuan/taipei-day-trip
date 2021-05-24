@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" >
+<title>{% block title %}台北一日遊{% endblock %}</title>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-  <title>{% block title %}台北一日遊{% endblock %}</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
+  {% block head %}
   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/attraction.css') }}"/>
+  {% endblock %}
 </head>
 
 <body>
   <nav class="fixed_navbar">
     <div id="navbar" class="navbar">
       <h1><a href="/" class="top_title">台北一日遊</a></h1>
-      <a href="" class="nav_item">預定行程</a>
+      <div class="nav_item" id="booking">預定行程</div>
       <div class="nav_item" id="login">登入/註冊</div>
       <div class="nav_item" id="logout">登出系統</div>
     </div>
