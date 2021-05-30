@@ -91,7 +91,7 @@ const callback = (entries, observer)=>{
     }
   }
 }
-const observer = new IntersectionObserver(callback,{threshold: 0.5})
+const observer = new IntersectionObserver(callback,{threshold: 0.2})
 observer.observe(footer)
 searching()
 

@@ -2,6 +2,7 @@
 {% block title %}詳細景點資訊 - 台北一日遊{% endblock %}
 {% block head %}
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/attraction.css') }}"/>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}"/>
 {% endblock %}
 {% block main %}
   <section>
@@ -51,5 +52,4 @@
 {% block script %}
   <script src="{{ url_for('static', filename='js/user.js') }}"></script>
   <script src="{{ url_for('static', filename='js/attraction.js') }}"></script>
-  <!-- <script src="{{ url_for('static', filename='js/booking.js') }}"></script> -->
 {% endblock %}
