@@ -5,6 +5,7 @@ from decouple import config
 import requests
 import random
 import time
+from sqlalchemy import text
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -289,7 +290,6 @@ def spot_list():
 				next_page = page+1
 			else:
 				next_page = None
-
 			# 建立景點列表
 			spot_list = []
 			sql = f"select * from spots limit {page*12},12"
@@ -313,11 +313,11 @@ def spot_list():
 
 		# 有輸入keyword，顯示篩選後的景點 #
 		else:
-			sql = f"select * from spots where name like '%{keyword}%' or category like '%{keyword}%' or mrt like '%{keyword}%' "
-			results = db.engine.execute(sql).fetchall()
+			sql = """select * from spots where name like '%' :keyword '%' or category like '%' :keyword '%' or mrt like '%' :keyword '%' """
+			results = db.engine.execute(text(sql), {"keyword": keyword}).fetchall()
 			all_page = len(results) // 12
 			if page < all_page:
-				next_page = page+1
+				next_page = page + 1
 			else:
 				next_page = None
 			spot_list = []
