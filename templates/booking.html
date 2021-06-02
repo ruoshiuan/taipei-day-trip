@@ -5,51 +5,60 @@
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}"/>
 {% endblock %}
 {% block main %}
-  <section>
-    <div class="banner"></div>
-    <p class="no_booking_alert">目前沒有任何預定行程。</p>
-    <main class="booking_section">
-      <form class="booking_info_form">
-        <div class="info_card">
-          <div class="photo"></div>
-          <ul class="booking_info">
-            <li><div class="spot_name"></div></li>
-            <li><b>日期：</b><span class="date"></span></li>
-            <li><b>時間：</b><span class="time"></span></li>
-            <li><b>費用：</b><span class="price"></span></li>
-            <li><b>地點：</b><span class="address"></span></li>
+  <div class="container">
+    <section>
+      <div class="top_banner">
+        <div class="banner"></div>
+        <p class="no_booking_alert">目前沒有任何預定行程。</p>
+      </div>
+      <main class="booking_section">
+        <form class="booking_info_form">
+          <div class="info_card">
+            <div class="photo"></div>
+            <ul class="booking_info">
+              <li><div class="spot_name"></div></li>
+              <li><b>日期：</b><span class="date"></span></li>
+              <li><b>時間：</b><span class="time"></span></li>
+              <li><b>費用：</b><span class="price"></span></li>
+              <li><b>地點：</b><span class="address"></span></li>
+            </ul>
+            <!-- <i class="fas fa-trash-alt"></i> -->
+            <img class="icon_delete" src="/static/images/icon_delete.png" alt="delete">
+          </div>
+        </form>
+        <hr>
+        <form class="contact_form">
+          <ul>
+            <li class="contact_li"><h4>您的聯絡資訊</h4></li>
+            <li class="contact_li">聯絡姓名：<input id="contact_name" type="text" placeholder="ex.王大明"></li>
+            <li class="contact_li">聯絡信箱：<input id="contact_email" type="email" placeholder="example@example.com"></li>
+            <li class="contact_li">手機號碼：<input id="contact_tel" type="tel" placeholder="09xxxxxxxx"></li>
+            <li class="contact_li"><p><b>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</b></p></li>
           </ul>
-          <!-- <i class="fas fa-trash-alt"></i> -->
-          <img class="icon_delete" src="/static/images/icon_delete.png" alt="delete">
-        </div>
-      </form>
-      <hr>
-      <form class="contact_form">
-        <ul>
-          <li class="contact_li"><h4>您的聯絡資訊</h4></li>
-          <li class="contact_li">聯絡姓名：<input id="contact_name" type="text" placeholder="ex.王大明"></li>
-          <li class="contact_li">聯絡信箱：<input id="contact_email" type="email" placeholder="example@example.com"></li>
-          <li class="contact_li">手機號碼：<input id="contact_tel" type="tel" placeholder="09xxxxxxxx"></li>
-          <li class="contact_li"><p><b>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</b></p></li>
-        </ul>
-      </form>
-      <hr>
-      <form class="pay_form">
-        <ul>
-          <li class="middle_li"><h4>信用卡付款資訊</h4></li>
-          <li class="middle_li">卡片號碼：<div class="tpfield" id="card-number"></div></li>
-          <li class="middle_li">有效期限：<div class="tpfield" id="card-expiration-date"></div></li>
-          <li class="middle_li">驗證密碼：<div class="tpfield" id="card-ccv"></div></li>
-        </ul>
-      </form>
-      <hr>
-      <form class="confirm_form">
-        <div class="total_price"></div>
-        <div class="error_alert" id="error_alert"></div>
-        <button type="button" id="confirm">確認訂購並付款</button>
-      </form>
-    </main>
-  </section>
+        </form>
+        <hr>
+        <form class="pay_form">
+          <ul>
+            <li class="middle_li"><h4>信用卡付款資訊</h4></li>
+            <li class="middle_li">卡片號碼：<div class="tpfield" id="card-number"></div></li>
+            <li class="middle_li">有效期限：<div class="tpfield" id="card-expiration-date"></div></li>
+            <li class="middle_li">驗證密碼：<div class="tpfield" id="card-ccv"></div></li>
+          </ul>
+        </form>
+        <hr>
+        <form class="confirm_form">
+          <div class="total_price"></div>
+          <div class="error_alert" id="error_alert"></div>
+          <button type="button" id="confirm">確認訂購並付款</button>
+        </form>
+      </main>
+    </section>
+  </div>
+  <div class="black_background"></div>
+  <div class="pay_loading">
+    <i class="fas fa-spinner"></i>
+    <div class="loading_alert">交易處理中</div>
+  </div>
 {% endblock %}
 {% block script %}
   <script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>

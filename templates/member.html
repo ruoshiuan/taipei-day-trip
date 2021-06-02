@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block title %}訂購紀錄 - 台北一日遊{% endblock %}
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/member.css') }}"/>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}"/>
+{% endblock %}
+{% block main %}
+<div class="container">
+  <middle_nav>
+      <i class="fas fa-receipt"></i>
+    </middle_nav>
+    <section>
+      <h2>訂購紀錄</h2>
+      <hr>
+      <div class="order_history"></div>
+    </section>
+</div>
+{% endblock %}
+{% block script %}
+  <script src="{{ url_for('static', filename='js/member.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+
+{% endblock %}

@@ -21,56 +21,6 @@ body:after {
   content: "";
 }
 
-.fixed_navbar {
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 10;
-  max-width: 100%;
-  background-color: #fff;
-  box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
-}
-
-#navbar {
-  height: 54px;
-  padding: 0 360px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-}
-
-#logout {
-  display: none;
-}
-
-h1 {
-  position: relative;
-  font-weight: 700;
-  font-size: 30px;
-  flex: auto;
-  margin: 0;
-  color: #448899;
-  padding: 2px;
-  letter-spacing: 1px;
-}
-
-.top_title {
-  text-decoration: none;
-  color: #448899;
-}
-
-.nav_item {
-  color: #666666;
-  display: block;
-  text-decoration: none;
-  padding: 10px;
-  cursor: pointer;
-}
 
 middle_nav {
   padding-top: 70px;
@@ -179,28 +129,16 @@ footer {
 
 /* RWD調整 */
 @media screen and (max-width: 1600px) {
-  #navbar {
-    padding: 0 150px;
-  }
-
   section {
     max-width: 1000px;
   }
 }
 @media screen and (max-width: 1200px) {
-  #navbar {
-    padding: 0 150px;
-  }
-
   section {
     max-width: 900px;
   }
 }
 @media screen and (max-width: 900px) {
-  #navbar {
-    padding: 0 50px;
-  }
-
   section {
     max-width: 600px;
     justify-content: center;
@@ -222,10 +160,6 @@ footer {
   }
 }
 @media screen and (max-width: 600px) {
-  #navbar {
-    padding: 0 10px;
-  }
-
   section {
     min-width: 340px;
   }

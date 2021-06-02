@@ -27,6 +27,7 @@ const renderBooking = ()=>{
     .then((result)=>{
       if(banner){
         banner.textContent = '您好，' + `${result["data"]["name"]}` + '，待預訂的行程如下：'
+        checkBooking();
       }
     })
 }
@@ -80,7 +81,7 @@ const checkBooking = ()=>{
 
   })
 }
-checkBooking();
+
 
 TPDirect.setupSDK(20397, 'app_phjDu6oKgOKugtGNKMz4blVIjeXFlwLEqLSpi6k3GWJG2a7OsJKXuOsXafx9', 'sandbox')
 const fields = {
@@ -127,6 +128,7 @@ const contact_name = document.getElementById("contact_name")
 const contact_email = document.getElementById("contact_email")
 const contact_tel = document.getElementById("contact_tel")
 const error_alert = document.getElementById("error_alert")
+const pay_loading = document.getElementsByClassName("pay_loading")[0]
 
 confirm.addEventListener('click',(e)=>{
   e.preventDefault()
@@ -147,10 +149,11 @@ confirm.addEventListener('click',(e)=>{
   TPDirect.card.getPrime((result) => {
     if (result.status !== 0) {
         console.log('get prime error ' + result.msg)
-        error_alert.textContent = "*請輸入正確信用卡號"
+        error_alert.textContent = "*請輸入正確信用卡資訊"
         return
     }
     // alert('get prime 成功，prime: ' + result.card.prime)
+    paying()
     error_alert.textContent = ""
     let order_data = {
       "prime": result.card.prime,
@@ -200,4 +203,10 @@ const remove_history = ()=>{
     .catch((err)=>{
       console.log("error",err)
       })
+}
+
+// 交易處理中特效
+const paying = ()=>{
+  pay_loading.style.display = "block"
+  black_background.style.display = "block"
 }

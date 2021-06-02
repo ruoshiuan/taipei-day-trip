@@ -1,11 +1,11 @@
 from flask import *
-import json
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 from decouple import config
+import json
 import requests
 import random
 import time
-from sqlalchemy import text
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -30,6 +30,38 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
+# member Pages
+@app.route("/member")
+def member():
+	return render_template("member.html")
+
+# 會員頁面(歷史訂單查詢)
+@app.route("/api/member", methods=['GET'])
+def member_get():
+	if "email" not in session:
+		return jsonify({"error": True, "message": "尚未登入系統"}), 403
+	else:
+		memberId = session["id"]
+		history_list = []
+		sql = f"select orderNumber,price,spotName,date,orderTime from orders where memberId = '{memberId}' order by orderTime desc"
+		results = db.engine.execute(sql).fetchall()
+		if results == []:
+			history_info = { "data": None }
+			return jsonify(history_info)
+		else:
+			for result in results:
+				history_info = {
+					"orderNumber": result[0],
+					"price": result[1],
+					"name": result[2],
+					"date": result[3],
+					"orderTime": result[4].strftime('%Y-%m-%d %H:%M:%S')
+				}
+				history_list.append(history_info)
+			order_history = history_list[0:len(results)]
+			data = {"data": order_history}
+			return jsonify(data)
+
 # 訂單付款
 @app.route("/api/orders", methods=['POST'])
 def orders_post():
@@ -49,11 +81,11 @@ def orders_post():
 	else:
 		headers = {
 			"Content-Type": "application/json",
-			"x-api-key": "partner_yInGYObIA5OfpcMCavgVhjHUSCNeyGzSEVxytP6LQKfItOqpZ9eYNMlw"
+			"x-api-key": config('partner_key')
 			}
 		verify_data = {
 			"prime": prime,
-			"partner_key": "partner_yInGYObIA5OfpcMCavgVhjHUSCNeyGzSEVxytP6LQKfItOqpZ9eYNMlw",
+			"partner_key": config('partner_key'),
 			"merchant_id": "rsw0524_CTBC",
 			"order_number": f"{time.strftime('%Y%m%d', time.localtime())}{str(random.randint(100000,999999))}",
 			"details": f"訂購項目:{trip_name},{trip_date},{trip_time}",
@@ -65,8 +97,7 @@ def orders_post():
 				"zip_code": "100",
 				"address": "台北市天龍區芝麻街1號1樓",
 				"national_id": "A123456789"
-			},
-			"remember": True
+			}
 		}
 		# Pay by Prime to TapPay Server & get TapPay result
 		response = requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime", data = json.dumps(verify_data), headers = headers)
@@ -99,10 +130,10 @@ def orders_get(orderNumber):
 		#response the record
 		headers = {
 			"Content-Type": "application/json",
-			"x-api-key": "partner_yInGYObIA5OfpcMCavgVhjHUSCNeyGzSEVxytP6LQKfItOqpZ9eYNMlw"
+			"x-api-key": config('partner_key')
 		}
 		record_data = {
-			"partner_key": "partner_yInGYObIA5OfpcMCavgVhjHUSCNeyGzSEVxytP6LQKfItOqpZ9eYNMlw",
+			"partner_key": config('partner_key'),
 			"filters": {
 				"order_number": orderNumber
 			}
@@ -130,27 +161,33 @@ def orders_get(orderNumber):
 		spotName = attraction["name"]
 		address = attraction["address"]
 		image = attraction["image"]
+		memberId = session["id"]
+		description = {
+				"number": order_number,
+				"price": price,
+				"trip": {
+				"attraction": attraction,
+				"date": date,
+				"time": time
+				},
+				"contact": {
+				"name": contact_name,
+				"email": contact_email,
+				"phone": contact_phone
+				},
+				"status": 1
+		}
 		if record_status == 0:
 			status = 1
-			sql = f"insert into orders (orderNumber, price, attractionId, spotName, address, image, date, time, name, email, phone, status) VALUES ('{order_number}', '{price}', '{attractionId}', '{spotName}', '{address}', '{image}', '{date}', '{time}', '{contact_name}', '{contact_email}', '{contact_phone}', '{status}')"
-			db.engine.execute(sql)
-			return jsonify({
-					"data": {
-						"number": order_number,
-						"price": price,
-						"trip": {
-						"attraction": attraction,
-						"date": date,
-						"time": time
-						},
-						"contact": {
-						"name": contact_name,
-						"email": contact_email,
-						"phone": contact_phone
-						},
-						"status": 1
-					}
-			})
+			sql = f"select memberId and orderNumber from orders where memberId = '{memberId}' and orderNumber = '{order_number}'"
+			value = db.engine.execute(sql).fetchone()
+			if value != None:
+				return jsonify({"data": description})
+			else:
+				sql = f"insert into orders (orderNumber, memberId, price, attractionId, spotName, address, image, date, time, name, email, phone, status) VALUES ('{order_number}','{memberId}', '{price}', '{attractionId}', '{spotName}', '{address}', '{image}', '{date}', '{time}', '{contact_name}', '{contact_email}', '{contact_phone}', '{status}')"
+				db.engine.execute(sql)
+				return jsonify({"data": description})
+
 # 預定行程
 @app.route("/api/booking", methods=['GET'])
 def booking_get():
@@ -253,7 +290,7 @@ def	sign_patch():
 		data = request.get_json()
 		email = data["email"]
 		password = data["password"]
-		sql = f"select id,name,email,password from user where email='{email}' and password='{password}'"
+		sql = f"select memberId,name,email,password from user where email='{email}' and password='{password}'"
 		account = db.engine.execute(sql).fetchone()
 		if account is None:
 			return jsonify({"error": True, "message": "登入失敗，帳號或密碼錯誤或其他原因"}),400

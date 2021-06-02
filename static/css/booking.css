@@ -18,60 +18,8 @@ body, html {
   flex-direction: column;
 }
 
-.fixed_navbar {
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 10;
-  max-width: 100%;
-  background-color: #fff;
-  box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
-}
-
-#navbar {
-  height: 54px;
-  padding: 0 360px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-}
-
-#logout {
-  display: none;
-}
-
-h1 {
-  position: relative;
-  font-weight: 700;
-  font-size: 30px;
-  flex: auto;
-  margin: 0;
-  color: #448899;
-  padding: 2px;
-  letter-spacing: 1px;
-}
-
-.top_title {
-  text-decoration: none;
-  color: #448899;
-}
-
-.nav_item {
-  color: #666666;
-  display: block;
-  text-decoration: none;
-  padding: 10px;
-  cursor: pointer;
-}
-
 section {
-  position: relative;
-  min-width: 1200px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   color: #666666;
@@ -80,7 +28,7 @@ section {
 .booking_section {
   display: none;
 }
-form {
+form,.top_banner {
   margin: 0;
   padding: 0;
   max-width: 1000px;
@@ -228,13 +176,49 @@ footer {
   bottom: 0;
   width: 100%;
 }
+#black_background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  background-color: #000;
+  opacity: 0.25;
+  display: none;
+}
+
+.pay_loading {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  background-color: #fff;
+  width: 200px;
+  height: 150px;
+  text-align: center;
+  border-radius: 5px;
+  color: #666666;
+  box-shadow: 0 4px 60px #aaa;
+  display: none;
+}
+
+.fa-spinner {
+  font-size: 45px;
+  line-height: 120px;
+  color: #66AABB;
+  -webkit-animation: rotating 2s linear infinite;
+          animation: rotating 2s linear infinite;
+}
+
+.loading_alert {
+  line-height: 5px;
+  font-weight: 500;
+}
 
 /* RWD調整 */
 @media screen and (max-width: 1600px) {
-  #navbar {
-    padding: 0 150px;
-  }
-
   section {
     min-width: 900px;
   }
@@ -248,10 +232,6 @@ footer {
   }
 }
 @media screen and (max-width: 1200px) {
-  #navbar {
-    padding: 0 150px;
-  }
-
   .banner, .no_booking_alert {
     text-align: center;
   }
@@ -261,10 +241,6 @@ footer {
   }
 }
 @media screen and (max-width: 900px) {
-  #navbar {
-    padding: 0 50px;
-  }
-
   section {
     min-width: 600px;
     margin-right: auto;
@@ -292,10 +268,6 @@ footer {
   }
 }
 @media screen and (max-width: 600px) {
-  #navbar {
-    padding: 0 10px;
-  }
-
   section {
     min-width: 360px;
   }
@@ -326,3 +298,17 @@ footer {
   }
 }
 /* RWD調整 */
+
+/* keyframes特效 */
+@-webkit-keyframes rotating {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* keyframes特效 */

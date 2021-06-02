@@ -22,55 +22,6 @@ body:after {
   content: "";
 }
 
-.fixed_navbar {
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 0 0 20px rgba(102, 170, 187, 0.2);
-}
-
-#navbar {
-  height: 54px;
-  padding: 0 360px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-#logout {
-  display: none;
-}
-
-h1 {
-  position: relative;
-  font-weight: 700;
-  font-size: 30px;
-  flex: auto;
-  margin: 0;
-  color: #448899;
-  padding: 2px;
-  letter-spacing: 1px;
-}
-
-.top_title {
-  text-decoration: none;
-  color: #448899;
-}
-
-.nav_item {
-  color: #666666;
-  display: block;
-  text-decoration: none;
-  padding: 10px;
-  cursor: pointer;
-}
-
 section {
   display: block;
   padding-top: 54px;
@@ -115,7 +66,7 @@ section {
   border-radius: 5px;
 }
 
-.fas {
+.fa-chevron-circle-left,.fa-chevron-circle-right {
   padding: 5px;
   position: absolute;
   top: 50%;
@@ -170,7 +121,7 @@ section {
   font-weight: 700;
 }
 
-ul {
+.order_list {
   background-color: #E8E8E8;
   border-radius: 5px;
   list-style: none;
@@ -183,9 +134,9 @@ li {
 }
 
 #date {
-  height: 30px;
+  height: 25px;
   width: 180px;
-  padding: 2px;
+  padding: 5px;
   background-color: #fff;
   border: none;
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -323,35 +274,11 @@ footer {
     opacity: 1;
   }
 }
-@-webkit-keyframes render_move {
-  0% {
-    top: 0;
-    opacity: 0;
-  }
-  100% {
-    top: 20%;
-    opacity: 1;
-  }
-}
-@keyframes render_move {
-  0% {
-    top: 0;
-    opacity: 0;
-  }
-  100% {
-    top: 20%;
-    opacity: 1;
-  }
-}
 /* keyframes特效 */
 
 /* RWD調整 */
 @media screen and (max-width: 1600px) {
-  #navbar {
-    padding: 0 150px;
-  }
-
-  ul {
+  .order_list {
     width: 500px;
   }
 
@@ -360,10 +287,6 @@ footer {
   }
 }
 @media screen and (max-width: 1200px) {
-  #navbar {
-    padding: 0 150px;
-  }
-
   section {
     width: 800px;
   }
@@ -382,15 +305,11 @@ footer {
     width: 90%;
   }
 
-  ul {
+  .order_list {
     width: 90%;
   }
 }
 @media screen and (max-width: 900px) {
-  #navbar {
-    padding: 0 50px;
-  }
-
   section {
     width: 600px;
   }
@@ -406,10 +325,6 @@ footer {
   }
 }
 @media screen and (max-width: 600px) {
-  #navbar {
-    padding: 0 10px;
-  }
-
   section {
     margin: 0;
     width: auto;

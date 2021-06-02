@@ -5,49 +5,51 @@
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}"/>
 {% endblock %}
 {% block main %}
-  <section>
-    <div id="spot_content" class="spot_content">
-      <div class="spot_slider">
-        <i class="fas fa-chevron-circle-left"></i>
-        <i class="fas fa-chevron-circle-right"></i>
-        <div class="spot_img"></div>
-        <div class="balls"></div>
+  <div class="container">
+    <section>
+      <div id="spot_content" class="spot_content">
+        <div class="spot_slider">
+          <i class="fas fa-chevron-circle-left"></i>
+          <i class="fas fa-chevron-circle-right"></i>
+          <div class="spot_img"></div>
+          <div class="balls"></div>
+        </div>
+        <form class="order_box">
+          <h3 class="spot_title"></h3>
+          <p class="spot_subtitle"></p>
+          <ul class="order_list">
+            <li><b>訂購導覽行程</b></li>
+            <li class="subtitle">以此景點為中心的一日行程，帶您探索城市角落故事</li>
+            <li><b>選擇日期： </b><input type="date" id="date"/></li>
+            <li><b>選擇時間： </b>
+              <div class="radio_group">
+                <label for="morning" class="radio">
+                  <input type="radio" class="radio_input" value="morning" name="time" id="morning" checked>
+                  <span class="check"></span>
+                  上半天
+                </label>
+                <label for="afternoon" class="radio">
+                  <input type="radio" class="radio_input" value="afternoon" name="time" id="afternoon">
+                  <span class="check"></span>
+                  下半天
+                </label>
+              </di>
+            </li>
+            <li><b>導覽費用： </b><span id="price">新台幣 2000 元</span></li>
+            <div class="select_date_alert">*請選擇日期</div>
+            <button id="start_booking">開始預定行程</button>
+          </ul>
+        </form>
       </div>
-      <form class="order_box">
-        <h3 class="spot_title"></h3>
-        <p class="spot_subtitle"></p>
-        <ul>
-          <li><b>訂購導覽行程</b></li>
-          <li class="subtitle">以此景點為中心的一日行程，帶您探索城市角落故事</li>
-          <li><b>選擇日期： </b><input type="date" id="date"/></li>
-          <li><b>選擇時間： </b>
-            <div class="radio_group">
-              <label for="morning" class="radio">
-                <input type="radio" class="radio_input" value="morning" name="time" id="morning" checked>
-                <span class="check"></span>
-                上半天
-              </label>
-              <label for="afternoon" class="radio">
-                <input type="radio" class="radio_input" value="afternoon" name="time" id="afternoon">
-                <span class="check"></span>
-                下半天
-              </label>
-            </di>
-          </li>
-          <li><b>導覽費用： </b><span id="price">新台幣 2000 元</span></li>
-          <div class="select_date_alert">*請選擇日期</div>
-          <button id="start_booking">開始預定行程</button>
-        </ul>
-      </form>
-    </div>
-    <div class="bottom_section">
-      <div class="description"></div>
-      <h4 class="address_title">景點地址：</h4>
-        <div class="address"></div>
-      <h4 class="way_title">交通方式：</h4>
-        <div class="way"></div>
-      </div>
-  </section>
+      <div class="bottom_section">
+        <div class="description"></div>
+        <h4 class="address_title">景點地址：</h4>
+          <div class="address"></div>
+        <h4 class="way_title">交通方式：</h4>
+          <div class="way"></div>
+        </div>
+    </section>
+  </div>
 {% endblock %}
 {% block script %}
   <script src="{{ url_for('static', filename='js/user.js') }}"></script>
