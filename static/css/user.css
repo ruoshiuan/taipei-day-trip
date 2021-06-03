@@ -80,7 +80,8 @@ h1 {
   background-color: #448899;
   opacity: 0.95;
   display: none;
-  border: 1px solid #AADDEE;
+  box-shadow: 0 0 20px rgba(102, 170, 187, 0.5);
+  border-bottom: 1px solid rgba(102, 170, 187, 0.5);
 }
 
 /* nav_bar */

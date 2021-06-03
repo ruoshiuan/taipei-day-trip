@@ -91,12 +91,6 @@ login_button.addEventListener('click',(e)=>{
     e.preventDefault()
     loginSystem()
 })
-login_password.addEventListener('keypress',(e)=>{
-    e.preventDefault()
-    if(e.key === 'Enter'){
-        loginSystem()
-    }
-})
 const loginSystem = ()=>{
     if(login_email.value === "" && login_password.value === ""){
         login_msg.textContent = "尚有欄位未輸入"
