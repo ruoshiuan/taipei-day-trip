@@ -25,7 +25,7 @@ fetch(url,{method: "GET"})
             }else{
                 time.textContent = "下午2點到晚上9點"
             }
-            price.textContent = "新台幣 " + result["data"]["price"] + "元"
+            price.textContent = "新台幣 " + result["data"]["price"] + " 元"
             address.textContent = result["data"]["trip"]["attraction"]["address"]
             contact_name.textContent = result["data"]["contact"]["name"]
             contact_email.textContent = result["data"]["contact"]["email"]

@@ -91,7 +91,11 @@ const callback = (entries, observer)=>{
     }
   }
 }
-const observer = new IntersectionObserver(callback,{threshold: 0.2})
+const observer = new IntersectionObserver(callback,{
+  root: null,
+  rootMargin: '10px',
+  threshold: 0.2
+})
 observer.observe(footer)
 searching()
 
@@ -102,7 +106,7 @@ search.addEventListener('click',()=>{
   loadingIcon.remove()
   searching()
 })
-document.getElementById("input_value").addEventListener('keypress',(e)=>{
+document.getElementById("input_value").addEventListener('keydown',(e)=>{
   if(e.key === 'Enter'){
     contentChildDelete()
     page = 0

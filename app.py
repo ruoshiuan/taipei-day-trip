@@ -29,7 +29,6 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
-
 # member Pages
 @app.route("/member")
 def member():
@@ -225,8 +224,8 @@ def booking_post():
 			date = data.get("date")
 			time = data.get("time")
 			price = data.get("price")
-			if date == "":
-				return jsonify({"error": True, "message": "請選擇日期"}), 400
+			if date == "" or time == "":
+				return jsonify({"error": True, "message": "請選擇日期或時間"}), 400
 			else:
 				sql = f"select * from booking"
 				result = db.engine.execute(sql).fetchone()

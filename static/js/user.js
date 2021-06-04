@@ -91,6 +91,12 @@ login_button.addEventListener('click',(e)=>{
     e.preventDefault()
     loginSystem()
 })
+login_password.addEventListener('keydown',(e)=>{
+    if(e.key === 'Enter'){
+        loginSystem()
+    }
+})
+// 登入系統驗證函式
 const loginSystem = ()=>{
     if(login_email.value === "" && login_password.value === ""){
         login_msg.textContent = "尚有欄位未輸入"
@@ -153,10 +159,19 @@ const logoutRemoveBooking = ()=>{
     })
 }
 
-// 點擊註冊帳戶按鈕後進行資料驗證
+// 點擊註冊帳戶
 const signup_button = document.getElementById("signup_button")
 signup_button.addEventListener('click',(e)=>{
     e.preventDefault()
+    signupVerify()
+})
+signup_password.addEventListener('keydown',(e)=>{
+    if(e.key === 'Enter'){
+        signupVerify()
+    }
+})
+// 註冊系統驗證函式
+const signupVerify = ()=>{
     //  姓名驗證:輸入2-20位中文或英文
     const signup_name_verify = /^[\u4e00-\u9fa5A-Za-z]{2,20}$/.test(signup_name.value)
     //  信箱驗證:符合信箱的格式(@前最多64字，@後的伺服器域名需要是以.來分開的格式)
@@ -202,7 +217,8 @@ signup_button.addEventListener('click',(e)=>{
             console.log("error",err)
         })
     }
-})
+}
+
 // 註冊成功：清除輸入欄的內容，轉向登入視窗
 const signupSucess = ()=>{
     login_msg.textContent = "恭喜註冊成功！歡迎登入台北一日遊"

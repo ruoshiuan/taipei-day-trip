@@ -63,7 +63,7 @@ const checkBooking = ()=>{
       }
       price.textContent = `新台幣 ${result["data"]["price"]} 元`
       address.textContent = `${result["data"]["attraction"]["address"]}`
-      total_price.textContent = `總價 新台幣${result["data"]["price"]} 元`
+      total_price.textContent = `總價 新台幣 ${result["data"]["price"]} 元`
     }else{
       no_booking_alert.style.display = "block"
       booking_section.style.display = "none"
