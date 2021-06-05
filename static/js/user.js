@@ -1,3 +1,4 @@
+const container = document.getElementsByClassName("container")[0]
 const login = document.getElementById("login")
 const logout = document.getElementById("logout")
 const black_background = document.getElementsByClassName("black_background")[0]
@@ -18,8 +19,8 @@ const signup_msg = document.getElementsByClassName("signup_msg")[0]
 login.addEventListener('click',()=>{
     login_form.style.display = "block"
     black_background.style.display = "block"
-    login_form.style.animation="render_move 1s ease"
-    black_background.style.display = "render_move 1s ease"
+    login_form.style.animation="appear 0.5s ease"
+    black_background.style.display = "appear 0.5s ease"
 })
 
 // 關閉登入表單
@@ -47,7 +48,7 @@ const try_signup = document.getElementsByClassName("try_signup")[0]
 try_signup.addEventListener('click',()=>{
     signup_form.style.display = "block"
     login_form.style.display = "none"
-    signup_form.style.animation = "render_move 1s ease"
+    signup_form.style.animation = "appear 0.5s ease"
     black_background.style.display = "block"
     login_email.value = ""
     login_password.value = ""
@@ -59,7 +60,7 @@ const try_login = document.getElementsByClassName("try_login")[0]
 try_login.addEventListener('click',()=>{
     login_form.style.display = "block"
     signup_form.style.display = "none"
-    login_form.style.animation = "render_move 1s ease"
+    login_form.style.animation = "appear 0.5s ease"
     signup_name.value = ""
     signup_email.value = ""
     signup_password.value = ""
@@ -76,17 +77,27 @@ fetch(src,{method: "GET"})
     .then((result)=>{
     if(result["data"]!=null){
         login.style.display = "none"
-        logout.style.display="block"
-        login_form.style.display="none"
+        logout.style.display = "block"
+        login_form.style.display = "none"
     }else{
         login.style.display = "block"
-        logout.style.display="none"
+        logout.style.display = "none"
     }
     }).catch(err=>console.log(err))
 
 // 登入系統
 const login_button = document.getElementById("login_button")
-login_button.addEventListener('click',()=>{
+login_button.addEventListener('click',(e)=>{
+    e.preventDefault()
+    loginSystem()
+})
+login_password.addEventListener('keydown',(e)=>{
+    if(e.key === 'Enter'){
+        loginSystem()
+    }
+})
+// 登入系統驗證函式
+const loginSystem = ()=>{
     if(login_email.value === "" && login_password.value === ""){
         login_msg.textContent = "尚有欄位未輸入"
         login_msg.style.color = "#ff2244"
@@ -113,13 +124,14 @@ login_button.addEventListener('click',()=>{
         })
         .catch((err)=>{
         console.log("error",err)
-            })
-        }
-});
+        })
+    }
+}
+
+
 
 // 點擊登出系統會導回首頁，並清除預定行程
 logout.addEventListener('click',()=>{
-    logoutRemoveBooking()
     let src = '/api/user'
     fetch(src, {method: 'DELETE'})
     .then((res)=>{
@@ -147,9 +159,19 @@ const logoutRemoveBooking = ()=>{
     })
 }
 
-// 點擊註冊帳戶按鈕後進行資料驗證
+// 點擊註冊帳戶
 const signup_button = document.getElementById("signup_button")
-signup_button.addEventListener('click',()=>{
+signup_button.addEventListener('click',(e)=>{
+    e.preventDefault()
+    signupVerify()
+})
+signup_password.addEventListener('keydown',(e)=>{
+    if(e.key === 'Enter'){
+        signupVerify()
+    }
+})
+// 註冊系統驗證函式
+const signupVerify = ()=>{
     //  姓名驗證:輸入2-20位中文或英文
     const signup_name_verify = /^[\u4e00-\u9fa5A-Za-z]{2,20}$/.test(signup_name.value)
     //  信箱驗證:符合信箱的格式(@前最多64字，@後的伺服器域名需要是以.來分開的格式)
@@ -195,7 +217,8 @@ signup_button.addEventListener('click',()=>{
             console.log("error",err)
         })
     }
-})
+}
+
 // 註冊成功：清除輸入欄的內容，轉向登入視窗
 const signupSucess = ()=>{
     login_msg.textContent = "恭喜註冊成功！歡迎登入台北一日遊"
@@ -223,8 +246,83 @@ booking.addEventListener('click',()=>{
         }else{
             login_form.style.display = "block"
             black_background.style.display = "block"
-            login_form.style.animation="render_move 1s ease"
-            black_background.style.display = "render_move 1s ease"
+            login_form.style.animation="appear 0.5s ease"
+            black_background.style.display = "appear 0.5s ease"
         }
       }).catch(err=>console.log(err))
 })
+
+// 點擊會員專區：使用者有登入->導向member頁面；沒有登入->顯示登入視窗
+const member  = document.getElementById("member")
+member.addEventListener('click',()=>{
+    let src = '/api/user'
+    fetch(src,{method: "GET"})
+      .then((res)=>{
+        return res.json()
+      })
+      .then((result)=>{
+        if(result["data"]!=null){
+            document.location.pathname='/member'
+        }else{
+            login_form.style.display = "block"
+            black_background.style.display = "block"
+            login_form.style.animation="appear 0.5s ease"
+            black_background.style.display = "appear 0.5s ease"
+        }
+      }).catch(err=>console.log(err))
+})
+
+const checklogin = (pathname)=>{
+    let src = '/api/user'
+    fetch(src,{method: "GET"})
+      .then((res)=>{
+        return res.json()
+      })
+      .then((result)=>{
+        if(result["data"]!=null){
+            document.location.pathname = pathname
+        }else{
+            login_form.style.display = "block"
+            black_background.style.display = "block"
+            login_form.style.animation="appear 0.5s ease"
+            black_background.style.display = "appear 0.5s ease"
+        }
+      }).catch(err=>console.log(err))
+}
+
+
+// 漢堡選單
+const blue_background = document.getElementsByClassName("blue_background")[0]
+const hamburger = document.getElementsByClassName("fa-bars")[0]
+const list = document.getElementsByClassName("list")[0]
+const close_icon = document.getElementsByClassName("fa-times")[0]
+hamburger.addEventListener('click',()=>{
+  hamburger.style.display = "none"
+  close_icon.style.display = "block"
+  blue_background.style.display = "block"
+  list.style.display = "block"
+})
+
+close_icon.addEventListener('click',()=>{
+  blue_background.style.display = "none"
+  list.style.display = "none"
+  hamburger.style.display = "block"
+  close_icon.style.display = "none"
+})
+
+blue_background.addEventListener('click',()=>{
+    close_hamburger()
+})
+
+container.addEventListener('click',()=>{
+    if(document.documentElement.clientWidth < 900){
+        close_hamburger()
+    }
+})
+
+const close_hamburger = ()=>{
+    blue_background.style.display = "none"
+    list.style.display = "none"
+    hamburger.style.display = "block"
+    close_icon.style.display = "none"
+}

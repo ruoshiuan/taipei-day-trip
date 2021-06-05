@@ -1,0 +1,53 @@
+{% extends "index.html" %}
+{% block title %}感謝您的訂購 - 台北一日遊{% endblock %}
+{% block head %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/thankyou.css') }}"/>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}"/>
+{% endblock %}
+{% block main %}
+<div class="container">
+  <middle_nav>
+    <i class="fas fa-clipboard-check"></i>
+  </middle_nav>
+    <section>
+      <div class="top_info">
+        <h2>- 感謝您的訂購 -</h2>
+        <h3><i class="fas fa-check-circle"></i>付款成功</h3>
+        <h3>訂單編號：<span id="order_number"></span></h3>
+      </div>
+      <div class="info">
+        <div class="order_info">
+          <h3 class="order_title">訂單行程資訊</h3>
+          <ul>
+            <li><div class="photo"></div></li>
+            <li><b>行程：</b><span class="spot_name"></span></li>
+            <li><b>日期：</b><span class="date"></span></li>
+            <li><b>時間：</b><span class="time"></span></li>
+            <li><b>費用：</b><span class="price"></span></li>
+            <li><b>地點：</b><span class="address"></span></li>
+          </ul>
+        </div>
+        <hr>
+        <div class="contact_info">
+          <h3 class="order_title">訂單聯絡人資訊</h3>
+          <ul>
+            <li class="contact_li"><b>聯絡姓名：</b><span id="contact_name"></span></li>
+            <li class="contact_li"><b>聯絡信箱：</b><span id="contact_email"></span></li>
+            <li class="contact_li"><b>手機號碼：</b><span id="contact_tel"></span></li>
+          </ul>
+          <div class="alert">再次提醒您，請保持手機暢通，準時到達，導覽人員將用手機與您聯繫。<br>若有任何建議或疑問，請與客服人員聯繫。<br>以下為客服人員之聯絡資訊：</div>
+          <ul>
+            <li><b>台北一日遊 - 客服中心</b></di>
+            <li><b>聯絡專線：</b>0800-123-456</li>
+            <li><b>聯絡信箱：</b>taipeiDayTrip@email.com</li>
+            <li><b>服務時間：</b>週一至週五 9:30~18:00(國定假日除外)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/thankyou.js') }}"></script>
+{% endblock %}

@@ -16,9 +16,6 @@ const spot_description = document.getElementsByClassName("description")[0]
 const spot_address = document.getElementsByClassName("address")[0]
 const spot_way = document.getElementsByClassName("way")[0]
 
-
-
-
 // 開始預定行程
 const start_booking = document.getElementById("start_booking")
 start_booking.addEventListener('click',(e)=>{
