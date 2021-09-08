@@ -34,8 +34,6 @@ fetch(url, { method: "GET" })
                     const num = document.createElement("a")
                     num.setAttribute("class","num")
                     num.textContent = number
-                    let source = "/thankyou?number="+number
-                    num.setAttribute("href",source)
                     num.setAttribute("title","訂單歷史頁面")
                     order_number.appendChild(num)
 

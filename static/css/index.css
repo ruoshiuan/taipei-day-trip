@@ -13,7 +13,7 @@ body, html {
   position: relative;
   overflow-x: hidden;
   -webkit-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 body:after {
   display: block;

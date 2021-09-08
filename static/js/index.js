@@ -6,7 +6,7 @@ const footer = document.getElementById("footer")
 const loadingIcon = document.getElementsByClassName("loading-icon")[0]
 
 // 連線json資料 搜尋景點
-const searching=()=>{
+const searching=() => {
   fetch_start = true;
   const keyword = document.getElementById("input_value").value
   let src;
@@ -17,12 +17,12 @@ const searching=()=>{
   }else{
         return;
   }fetch(src)
-    .then((res)=>{
+    .then((res) => {
       return res.json()
-    }).then((result)=>{
+    }).then((result) => {
       const spots = result.data
       const nextPage = result.nextPage
-      if (spots.length!==0){
+      if (spots.length !== 0){
         spotData(spots)
         if(spots.length < 12){
           loadingIcon.remove()
@@ -33,13 +33,13 @@ const searching=()=>{
         content.appendChild(not_found)
         loadingIcon.remove()
       }
-      page = nextPage;
-    }).then(()=>{
+      page = nextPage
+    }).then(() => {
         fetch_start = false
       })
 }
 // 整理動態資料
-const spotData=(spots)=>{
+const spotData = (spots) => {
   for(let spot of spots){
     const name = spot.name
     const mrt = spot.mrt
@@ -61,7 +61,7 @@ const spotData=(spots)=>{
     const cata_name = document.createElement("p")
     cata_name.setAttribute("class","cata_name")
 
-    pic.style.backgroundImage = 'url(' + image + ')'
+    pic.style.backgroundImage = 'url(' + 'https' + image.split('http')[1] + ')'
     spot_name.textContent = name
     mrt_name.textContent = mrt
     cata_name.textContent = category
@@ -69,7 +69,7 @@ const spotData=(spots)=>{
   }
 }
 // 顯示資料
-const renderSpot = (info,pic,spot_name,mrt_name,cata_name)=>{
+const renderSpot = (info,pic,spot_name,mrt_name,cata_name) => {
   content.appendChild(info)
   info.appendChild(pic)
   info.appendChild(spot_name)
@@ -77,9 +77,8 @@ const renderSpot = (info,pic,spot_name,mrt_name,cata_name)=>{
   info.appendChild(cata_name)
 }
 // 當視窗觸及觀察目標(footer)時，才載入下一頁景點；page==null就結束觀察
-const callback = (entries, observer)=>{
+const callback = (entries, observer) => {
   for(const entry of entries){
-    // console.log(entry)
     if(entry.isIntersecting){
       if(page!=null){
         if(page>0){
@@ -91,7 +90,7 @@ const callback = (entries, observer)=>{
     }
   }
 }
-const observer = new IntersectionObserver(callback,{
+const observer = new IntersectionObserver(callback, {
   root: null,
   rootMargin: '10px',
   threshold: 0.2
@@ -100,13 +99,13 @@ observer.observe(footer)
 searching()
 
 // 點擊按enter鍵之後搜尋景點
-search.addEventListener('click',()=>{
+search.addEventListener('click',() => {
   contentChildDelete()
   page = 0
   loadingIcon.remove()
   searching()
 })
-document.getElementById("input_value").addEventListener('keydown',(e)=>{
+document.getElementById("input_value").addEventListener('keydown',(e) => {
   if(e.key === 'Enter'){
     contentChildDelete()
     page = 0
@@ -115,7 +114,7 @@ document.getElementById("input_value").addEventListener('keydown',(e)=>{
   }
 })
 // 清空content容器中的所有景點
-const contentChildDelete = ()=>{
+const contentChildDelete = () => {
   while(content.hasChildNodes()) {
       content.removeChild(content.firstChild);
     }

@@ -15,7 +15,6 @@ app.secret_key = config('secret_key')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{config('userID')}:{config('password')}@localhost/taipei_day_trip"
 db = SQLAlchemy(app)
-
 # Pages
 @app.route("/")
 def index():
