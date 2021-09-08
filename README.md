@@ -33,7 +33,7 @@ http://52.221.32.164:3000/
 
 ## Architecture Diagram
 
-<img src="https://user-images.githubusercontent.com/76982122/132345665-ba25dd66-2efd-4529-9dd5-dc03e8b92da3.png" alt="000" width="600" />
+<img src="https://user-images.githubusercontent.com/76982122/132482136-f88e801b-5560-4c67-a1b2-b89b92fcfd81.png" alt="000" width="600" />
 
 ## Technologies
 
