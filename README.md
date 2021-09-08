@@ -1,12 +1,19 @@
 # Taipei Day Trip 台北一日遊
 
+1. [Summary 專案簡介](#summary)
+2. [Demo 專案頁面](#demo)
+3. [Technologies 專案技術](#technologies)
+4. [Diagram 專案架構圖](#architecture-diagram)
+5. [Feature 專案介紹](#feature)
+6. [補充 - 開發過程](#development-process)
+
 ## Summary
 
 Taipei Day Trip(台北一日遊) is a simple travel e-commerce website.<br>
 With 300+ attraction info from Taipei city open data API, users could click each of the attraction cards to check out the attraction details.<br>
 After registering for login, members could book an itinernary and make an order with a credit card payment, or check the order records in the member page.
 
-## Live Demo
+## Demo
 ### Demo Link
 
 http://52.221.32.164:3000/
@@ -24,8 +31,11 @@ http://52.221.32.164:3000/
 |  Valid Date |          01 / 23          |
 |     CVV     |            123            |
 
+## Architecture Diagram
 
-## Built With
+<img src="https://user-images.githubusercontent.com/76982122/132345665-ba25dd66-2efd-4529-9dd5-dc03e8b92da3.png" alt="000" width="600" />
+
+## Technologies
 
 | Name                      | Descriptions                                           |
 | ------------------------- | ------------------------------------------------------ |
@@ -66,3 +76,9 @@ Log in/sign up to become a member after registration, users could book an itiner
 Also, members could check the order records in the member page.
 
 <img src="https://user-images.githubusercontent.com/76982122/130183375-0ed2095a-bd31-4f19-a331-ca78be924735.png" alt="06" width="650" />
+
+## Development Process
+**補充 - 開發過程**
+1. 建立 devlop 分支，完成該週進度時請 reviewer 確認，通過確認後合併到 main 分支。
+2. 完成每週進度都會同步專案到 EC2 Instance ，並使用 nohup 指令確保網站運作。
+<img src="https://user-images.githubusercontent.com/76982122/132134619-427a320f-da9a-41d6-a90e-7ef8c4d4faa7.png" alt="001" width="700" />
